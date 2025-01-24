@@ -15,12 +15,14 @@ jobs:
 
     strategy:
       matrix:
-        k8s-version: [1.27.0, 1.32.0]
+        k8s-version: [1.30.0, 1.31.0]
     steps:
-    - name: Set up Kind
-      uses: helm/kind-action@v1.2
-      with:
-        version: ${{ matrix.k8s-version }}
+    - name: Kubernetes KinD Cluster
+        uses: helm/kind-action@v1
+        with:
+          node_image: kindest/node:v${{ matrix.k8s-version }}
+      # with:
+      #   version: ${{ matrix.k8s-version }}
     - name: Verify Kind
       run: |
         kind -v

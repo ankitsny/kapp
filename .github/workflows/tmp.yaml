@@ -19,8 +19,8 @@ jobs:
     steps:
     - name: Kubernetes KinD Cluster
       uses: helm/kind-action@v1
-        with:
-          node_image: kindest/node:v${{ matrix.k8s-version }}
+      with:
+        node_image: kindest/node:v${{ matrix.k8s-version }}
       # with:
       #   version: ${{ matrix.k8s-version }}
     - name: Verify Kind

@@ -18,7 +18,7 @@ jobs:
         k8s-version: [1.30.0, 1.31.0]
     steps:
     - name: Kubernetes KinD Cluster
-        uses: helm/kind-action@v1
+      uses: helm/kind-action@v1
         with:
           node_image: kindest/node:v${{ matrix.k8s-version }}
       # with:

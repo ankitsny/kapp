@@ -27,5 +27,11 @@ jobs:
       run: |
         kind version
         kubectl version
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: go.mod
+    - name: Verify go
+      run: go version
 
         

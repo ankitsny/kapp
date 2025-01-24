@@ -15,10 +15,10 @@ jobs:
 
     strategy:
       matrix:
-        k8s-version: [v1.27.0, v1.32.0]
+        k8s-version: [1.27.0, 1.32.0]
     steps:
     - name: Set up Kind
-      uses: helm/kind-action@v1.2.0
+      uses: helm/kind-action@v1.2
       with:
         version: ${{ matrix.k8s-version }}
     - name: Verify Kind

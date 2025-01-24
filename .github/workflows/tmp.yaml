@@ -45,7 +45,7 @@ jobs:
         set -e -x
 
         export GOPATH=$(pwd)
-        # cd src/github.com/${{ github.repository }}
+        cd ${{ github.repository }}
 
         # Install ytt for build
         mkdir -p /tmp/bin

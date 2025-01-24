@@ -9,7 +9,7 @@ on:
       - develop
 
 jobs:
-  test-k8s:
+  test-all-on-multiple-k8s-version:
     runs-on: ubuntu-latest
     strategy:
       matrix:

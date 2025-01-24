@@ -1,4 +1,4 @@
-name: Test on Kubernetes 1.27 and 1.32
+name: Testing on kubernetes 1.27 and 1.32
 
 on:
   push:
@@ -10,20 +10,16 @@ on:
 
 jobs:
   test-k8s:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        k8s-version: [1.30.0, 1.31.0]
+        k8s-version: [1.27.0, 1.32.0]
     steps:
-    - name: Kubernetes KinD Cluster
+    - name: Create kind cluster v${{matrix.k8s-version}}
       uses: helm/kind-action@v1
       with:
         node_image: kindest/node:v${{ matrix.k8s-version }}
-      # with:
-      #   version: ${{ matrix.k8s-version }}
-    - name: Verify Kind
+    - name: Verify kind
       run: |
         kind version
         kubectl version
@@ -32,20 +28,19 @@ jobs:
       with:
         path: src/github.com/${{ github.repository }}
         fetch-depth: 0
-    - name: Set up Go
+    - name: Set up go
       uses: actions/setup-go@v5
       with:
         go-version-file: src/github.com/${{ github.repository }}/go.mod
-    - name: Verify go
+    - name: Verify go version
       run: |
         go version
-        ls -al
-    - name: Run Tests
+    - name: Run tests
       run: |
         set -e -x
 
         export GOPATH=$(pwd)
-        cd src/github.com/${{ github.repository }}
+        pushd src/github.com/${{ github.repository }}
 
         # Install ytt for build
         mkdir -p /tmp/bin
@@ -54,11 +49,6 @@ jobs:
         ./hack/verify-no-dirty-files.sh
 
         wget -O- https://carvel.dev/install.sh | K14SIO_INSTALL_BIN_DIR=/tmp/bin bash
-
-        # curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-        # install minikube-linux-amd64 /usr/local/bin/minikube
-        # minikube start --driver=docker
-        # eval $(minikube docker-env --shell=bash)
 
         # Ensure that there is no existing kapp installed
         rm -f /tmp/bin/kapp

@@ -25,6 +25,7 @@ jobs:
       #   version: ${{ matrix.k8s-version }}
     - name: Verify Kind
       run: |
-        kind -v
+        kind version
+        kubectl version
 
         

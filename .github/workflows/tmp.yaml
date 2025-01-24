@@ -25,7 +25,9 @@ jobs:
         version: ${{ matrix.k8s-version }}
 
     - name: Verify Kind Installation
-      run: kind --version
+      run: |
+        kind --version
+        sha256sum /opt/hostedtoolcache/kind/${{ matrix.k8s-version }}/amd64/kind/bin/kind
 
     - name: Set up Go
       uses: actions/setup-go@v5

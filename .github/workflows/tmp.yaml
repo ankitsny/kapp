@@ -3,10 +3,10 @@ name: Test on Kubernetes 1.27 and 1.32
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
-      - main
+      - develop
 
 jobs:
   test-k8s:

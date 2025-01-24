@@ -40,5 +40,34 @@ jobs:
       run: |
         go version
         ls -al
+    - name: Run Tests
+      run: |
+        set -e -x
+
+        export GOPATH=$(pwd)
+        # cd src/github.com/${{ github.repository }}
+
+        # Install ytt for build
+        mkdir -p /tmp/bin
+        export PATH=/tmp/bin:$PATH
+
+        ./hack/verify-no-dirty-files.sh
+
+        wget -O- https://carvel.dev/install.sh | K14SIO_INSTALL_BIN_DIR=/tmp/bin bash
+
+        # curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        # install minikube-linux-amd64 /usr/local/bin/minikube
+        # minikube start --driver=docker
+        # eval $(minikube docker-env --shell=bash)
+
+        # Ensure that there is no existing kapp installed
+        rm -f /tmp/bin/kapp
+
+        ./hack/build-binaries.sh
+
+        export KAPP_E2E_NAMESPACE=kapp-test
+        kubectl create ns $KAPP_E2E_NAMESPACE
+
+        ./hack/test-all.sh
 
         

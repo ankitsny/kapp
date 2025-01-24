@@ -18,7 +18,7 @@ jobs:
         k8s-version: [1.27.0, 1.32.0]
 
     steps:
-     - name: Set up Kind
+    - name: Set up Kind
       uses: helm/kind-action@v1
       with:
         wait: 1m
@@ -26,6 +26,7 @@ jobs:
 
     - name: Verify Kind Installation
       run: kind --version
+
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
